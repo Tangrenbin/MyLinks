@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>MyLinks | 个人收藏导航</title>
+    <meta name="description" content="一个可静态部署的个人收藏导航页，包含 Google / 百度 / Bing 搜索、市场概览与分类收藏。" />
+    <!-- 引入现代化字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- 背景流光效果 -->
+    <div class="blob-cont">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="blob blob3"></div>
+    </div>
+
+    <div class="page-shell">
+      <aside class="market-panel glass-panel">
+        <div class="market-header-custom">
+          <div class="mhc-left">
+            <svg class="trend-icon" viewBox="0 0 24 24" fill="none" stroke="#55E023" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7L13.5 15.5L8.5 10.5L2 17"/><path d="M16 7H22V13"/></svg>
+            <h2>市场脉搏</h2>
+          </div>
+        </div>
+        <div id="market-widget" class="market-widget-stack"></div>
+      </aside>
+
+      <main class="hero">
+        <section class="search-panel glass-panel">
+          <div class="search-header">
+            <h1 class="gradient-text">探索无界</h1>
+            <p>一切从此开始</p>
+          </div>
+
+          <form id="search-form" class="search-form">
+            <div class="search-input-wrap">
+              <input
+                id="search-input"
+                name="q"
+                type="search"
+                autocomplete="off"
+                placeholder="你想寻找什么？"
+              />
+              <button id="search-submit" class="primary-search glow-button" type="submit">
+                搜索
+              </button>
+            </div>
+          </form>
+
+          <div class="engine-grid" aria-label="搜索引擎选择">
+            <button class="engine-card is-active" type="button" data-engine="google">
+              <div class="engine-icon bg-google" aria-hidden="true">
+                <img
+                  class="engine-icon-image"
+                  src="https://www.google.com/favicon.ico"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                >
+                <span class="engine-icon-fallback">G</span>
+              </div>
+              <div class="engine-info">
+                <strong>Google</strong>
+                <small>全球资讯</small>
+              </div>
+            </button>
+            <button class="engine-card" type="button" data-engine="baidu">
+              <div class="engine-icon bg-baidu" aria-hidden="true">
+                <img
+                  class="engine-icon-image"
+                  src="https://www.baidu.com/favicon.ico"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                >
+                <span class="engine-icon-fallback">B</span>
+              </div>
+              <div class="engine-info">
+                <strong>百度</strong>
+                <small>中文核心</small>
+              </div>
+            </button>
+            <button class="engine-card" type="button" data-engine="bing">
+              <div class="engine-icon bg-bing" aria-hidden="true">
+                <img
+                  class="engine-icon-image"
+                  src="https://www.bing.com/favicon.ico"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                >
+                <span class="engine-icon-fallback">Bi</span>
+              </div>
+              <div class="engine-info">
+                <strong>Bing</strong>
+                <small>纯净搜索</small>
+              </div>
+            </button>
+          </div>
+          <p id="search-hint" class="search-hint">当前默认：Google 搜索</p>
+        </section>
+      </main>
+
+      <section class="links-section">
+        <div class="links-header">
+          <h2 class="section-title">分类导航</h2>
+        </div>
+        <div id="links-root" class="links-grid"></div>
+      </section>
+    </div>
+
+    <!-- 主题切换按钮 -->
+    <button id="theme-toggle" class="theme-toggle glass-panel" aria-label="切换主题">
+      <span class="theme-icon"></span>
+      <span class="theme-text">切换主题</span>
+    </button>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>

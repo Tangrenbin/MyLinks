@@ -31,6 +31,23 @@ const LINK_GROUPS = [
     ],
   },
   {
+    key: "github",
+    title: "GitHub",
+    links: [
+      {
+        name: "个人主页",
+        meta: "github.com/Tangrenbin",
+        href: "https://github.com/Tangrenbin?tab=repositories",
+        logo: "https://github.com/favicon.ico",
+      },
+      {
+        name: "个人收藏开源项目",
+        meta: "blog.990124.xyz",
+        href: "https://blog.990124.xyz/post/jiang-lai-ye-xu-neng-yong-dao-de-kai-yuan-ku.html",
+      },
+    ],
+  },
+  {
     key: "news",
     title: "中国新闻",
     links: [

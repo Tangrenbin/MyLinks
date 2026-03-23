@@ -744,6 +744,7 @@ body {
 .group-card.news { border-top: 4px solid var(--accent-2); }
 .group-card.us-news { border-top: 4px solid var(--accent-4); }
 .group-card.personal-site { border-top: 4px solid var(--accent-3); }
+.group-card.github { border-top: 4px solid #6e7781; }
 
 .group-card-header {
   display: flex;

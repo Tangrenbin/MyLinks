@@ -59,15 +59,28 @@ const LINK_GROUPS = [
     ],
   },
   {
-    key: "personal",
-    title: "个人常用",
+    key: "proxy",
+    title: "代理机场",
     links: [
-      { name: "Gmail", meta: "mail.google.com", href: "https://mail.google.com/" },
-      { name: "Google Drive", meta: "drive.google.com", href: "https://drive.google.com/" },
-      { name: "Google Calendar", meta: "calendar.google.com", href: "https://calendar.google.com/" },
-      { name: "Notion", meta: "notion.so", href: "https://www.notion.so/" },
-      { name: "X / Twitter", meta: "x.com", href: "https://x.com/" },
-      { name: "YouTube", meta: "youtube.com", href: "https://www.youtube.com/" },
+      { name: "Webshare", meta: "dashboard.webshare.io", href: "https://dashboard.webshare.io/" },
+      { name: "69云", meta: "china.69yun69.com", href: "https://china.69yun69.com/" },
+    ],
+  },
+  {
+    key: "domain",
+    title: "域名管理",
+    links: [
+      { name: "Spaceship", meta: "spaceship.com", href: "https://www.spaceship.com/" },
+      { name: "Cloudflare", meta: "dash.cloudflare.com", href: "https://dash.cloudflare.com/" },
+    ],
+  },
+  {
+    key: "personal-site",
+    title: "个人网站",
+    links: [
+      { name: "网站导航", meta: "my-links.990124.xyz", href: "https://my-links.990124.xyz/" },
+      { name: "博客", meta: "my-links.990124.xyz", href: "https://my-links.990124.xyz/" },
+      { name: "定投收益计算器", meta: "dca.990124.xyz", href: "https://dca.990124.xyz/" },
     ],
   },
 ];

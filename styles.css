@@ -642,7 +642,7 @@ body {
 .group-card.ai { border-top: 4px solid var(--accent-1); }
 .group-card.news { border-top: 4px solid var(--accent-2); }
 .group-card.us-news { border-top: 4px solid var(--accent-4); }
-.group-card.personal { border-top: 4px solid var(--accent-3); }
+.group-card.personal-site { border-top: 4px solid var(--accent-3); }
 
 .group-card-header {
   display: flex;

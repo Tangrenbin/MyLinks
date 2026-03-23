@@ -1,0 +1,49 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>MyLinks logo</title>
+  <defs>
+    <linearGradient id="bg" x1="36" y1="28" x2="218" y2="228" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.5" stop-color="#111C39"/>
+      <stop offset="1" stop-color="#0A1020"/>
+    </linearGradient>
+    <linearGradient id="wire" x1="70" y1="74" x2="192" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4B5FD"/>
+      <stop offset="0.48" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#5EEAD4"/>
+    </linearGradient>
+    <radialGradient id="glowLeft" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(74 72) rotate(38.5) scale(116.931)">
+      <stop stop-color="#8B5CF6" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowRight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(186 188) rotate(-139.5) scale(123.438)">
+      <stop stop-color="#22D3EE" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="30" y="34" width="196" height="188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur_1_2"/>
+    </filter>
+  </defs>
+
+  <rect x="16" y="16" width="224" height="224" rx="56" fill="url(#bg)"/>
+  <rect x="17" y="17" width="222" height="222" rx="55" stroke="#FFFFFF" stroke-opacity="0.12"/>
+  <circle cx="80" cy="76" r="74" fill="url(#glowLeft)"/>
+  <circle cx="186" cy="184" r="78" fill="url(#glowRight)"/>
+
+  <path d="M64 68C92 47.3333 123.333 39.3333 158 44C188 47.3333 208.667 61.3333 220 86" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="10" stroke-linecap="round"/>
+  <path d="M38 184C52.6667 202.667 72 214 96 218" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="8" stroke-linecap="round"/>
+
+  <g filter="url(#softGlow)">
+    <path d="M58 178L92 88L128 148L168 78L198 178" stroke="url(#wire)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M58 178L92 88L128 148L168 78L198 178" stroke="#FFFFFF" stroke-opacity="0.92" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="58" cy="178" r="9" fill="#60A5FA"/>
+  <circle cx="92" cy="88" r="12" fill="#C4B5FD"/>
+  <circle cx="128" cy="148" r="10" fill="#A78BFA"/>
+  <circle cx="168" cy="78" r="12" fill="#5EEAD4"/>
+  <circle cx="198" cy="178" r="9" fill="#22D3EE"/>
+
+  <path d="M186 54L189.939 63.0611L199 67L189.939 70.9389L186 80L182.061 70.9389L173 67L182.061 63.0611L186 54Z" fill="#F8FAFC"/>
+</svg>

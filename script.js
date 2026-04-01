@@ -48,6 +48,16 @@ const LINK_GROUPS = [
     ],
   },
   {
+    key: "personal-site",
+    title: "个人网站",
+    links: [
+      { name: "网站导航", meta: "my-links.990124.xyz", href: "https://my-links.990124.xyz/" },
+      { name: "博客", meta: "blog.990124.xyz", href: "https://blog.990124.xyz/" },
+      { name: "HPLC技术交流社区", meta: "hplc-club.990124.xyz", href: "https://hplc-club.990124.xyz/" },
+      { name: "定投收益计算器", meta: "dca.990124.xyz", href: "https://dca.990124.xyz/" },
+    ],
+  },
+  {
     key: "news",
     title: "中国新闻",
     links: [
@@ -89,16 +99,6 @@ const LINK_GROUPS = [
     links: [
       { name: "Spaceship", meta: "spaceship.com", href: "https://www.spaceship.com/" },
       { name: "Cloudflare", meta: "dash.cloudflare.com", href: "https://dash.cloudflare.com/" },
-    ],
-  },
-  {
-    key: "personal-site",
-    title: "个人网站",
-    links: [
-      { name: "网站导航", meta: "my-links.990124.xyz", href: "https://my-links.990124.xyz/" },
-      { name: "博客", meta: "blog.990124.xyz", href: "https://blog.990124.xyz/" },
-      { name: "HPLC技术交流社区", meta: "hplc-club.990124.xyz", href: "https://hplc-club.990124.xyz/" },
-      { name: "定投收益计算器", meta: "dca.990124.xyz", href: "https://dca.990124.xyz/" },
     ],
   },
 ];

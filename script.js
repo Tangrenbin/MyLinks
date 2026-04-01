@@ -97,6 +97,7 @@ const LINK_GROUPS = [
     links: [
       { name: "网站导航", meta: "my-links.990124.xyz", href: "https://my-links.990124.xyz/" },
       { name: "博客", meta: "blog.990124.xyz", href: "https://blog.990124.xyz/" },
+      { name: "HPLC技术交流社区", meta: "hplc-club.990124.xyz", href: "https://hplc-club.990124.xyz/" },
       { name: "定投收益计算器", meta: "dca.990124.xyz", href: "https://dca.990124.xyz/" },
     ],
   },

@@ -101,6 +101,13 @@ const LINK_GROUPS = [
       { name: "Cloudflare", meta: "dash.cloudflare.com", href: "https://dash.cloudflare.com/" },
     ],
   },
+  {
+    key: "hosting",
+    title: "网站托管",
+    links: [
+      { name: "Vercel", meta: "vercel.com", href: "https://vercel.com/" },
+    ],
+  },
 ];
 
 const MARKET_REFRESH_MS = 60_000;

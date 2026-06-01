@@ -94,6 +94,13 @@ const LINK_GROUPS = [
     ],
   },
   {
+    key: "sms-platform",
+    title: "接码平台",
+    links: [
+      { name: "Hero SMS", meta: "hero-sms.com", href: "https://hero-sms.com/cn" },
+    ],
+  },
+  {
     key: "domain",
     title: "域名管理",
     links: [

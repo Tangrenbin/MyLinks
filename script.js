@@ -93,7 +93,7 @@ const LINK_GROUPS = [
     title: "代理机场",
     links: [
       { name: "Webshare", meta: "dashboard.webshare.io", href: "https://dashboard.webshare.io/" },
-      { name: "69云", meta: "china.69yun69.com", href: "https://china.69yun69.com/" },
+      { name: "69云", meta: "69yun69.com", href: "https://69yun69.com/" },
     ],
   },
   {

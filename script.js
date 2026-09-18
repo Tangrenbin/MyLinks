@@ -118,6 +118,14 @@ const LINK_GROUPS = [
       { name: "Vercel", meta: "vercel.com", href: "https://vercel.com/" },
     ],
   },
+  {
+    key: "emby",
+    title: "Emby 服务器",
+    links: [
+      { name: "aytplus", meta: "em.aytplus.top", href: "https://em.aytplus.top/" },
+      { name: "handoumedia", meta: "faka.handoumedia.top", href: "https://faka.handoumedia.top/" },
+    ],
+  },
 ];
 
 const MARKET_REFRESH_MS = 60_000;

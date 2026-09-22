@@ -132,6 +132,10 @@ const MARKET_REFRESH_MS = 60_000;
 const EASTMONEY_HEADERS = {
   Accept: "application/json,text/plain,*/*",
 };
+const EASTMONEY_QUOTE_HOSTS = [
+  "https://push2.eastmoney.com",
+  "https://push2delay.eastmoney.com",
+];
 const MARKET_YTD_BASELINES = {
   gold: {
     2026: 4331.505,
@@ -510,6 +514,7 @@ async function updateMarketCard(config) {
     const snapshot = await loadMarketSnapshot(config);
     applyMarketSnapshot(card, config, snapshot);
   } catch (error) {
+    console.warn(`Unable to load ${config.label} market data`, error);
     applyMarketError(card);
   } finally {
     card.classList.remove("is-loading");
@@ -747,8 +752,24 @@ function getEastmoneyYearBaseline(payload) {
 
 async function loadAu9999Snapshot(config) {
   const currentYear = getCurrentYear();
-  const quoteUrl = `https://push2delay.eastmoney.com/api/qt/stock/get?secid=${encodeURIComponent(config.secid)}&fields=f57,f58,f43,f44,f45,f46,f169,f170,f171,f60`;
-  const quote = parseEastmoneyQuote(await fetchJson(quoteUrl, { headers: EASTMONEY_HEADERS }));
+  const quotePath = `/api/qt/stock/get?secid=${encodeURIComponent(config.secid)}&fields=f57,f58,f43,f44,f45,f46,f169,f170,f171,f60`;
+  let quotePayload;
+  let lastError;
+
+  for (const host of EASTMONEY_QUOTE_HOSTS) {
+    try {
+      quotePayload = await fetchJson(`${host}${quotePath}`, { headers: EASTMONEY_HEADERS });
+      break;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (!quotePayload) {
+    throw lastError || new Error("Eastmoney quote endpoints returned no data");
+  }
+
+  const quote = parseEastmoneyQuote(quotePayload);
   const configuredBaseline = getMarketYtdBaseline(config.key, currentYear);
 
   if (Number.isFinite(configuredBaseline)) {

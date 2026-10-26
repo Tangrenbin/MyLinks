@@ -30,6 +30,7 @@ const LINK_GROUPS = [
       { name: "AI Code Mirror", meta: "aicodemirror.com", href: "https://www.aicodemirror.com/" },
       { name: "TimiCC", meta: "timicc.com", href: "https://timicc.com/home" },
       { name: "SSSAiCode", meta: "sssaicode.com", href: "https://sssaicode.com/" },
+      { name: "HelpAIO", meta: "helpaio.com", href: "https://www.helpaio.com/transit" },
       { name: "GLM", meta: "chatglm.cn", href: "https://chatglm.cn/", logo: "https://chatglm.cn/favicon.ico" },
     ],
   },

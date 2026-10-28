@@ -130,6 +130,7 @@ const LINK_GROUPS = [
 ];
 
 const MARKET_REFRESH_MS = 60_000;
+const MARKET_REQUEST_TIMEOUT_MS = 6_000;
 const EASTMONEY_HEADERS = {
   Accept: "application/json,text/plain,*/*",
 };
@@ -434,13 +435,20 @@ function formatShortTimestamp(rawValue) {
   return rawValue;
 }
 
-function getLocalTimestamp() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  return `${month}-${day} ${hours}:${minutes}`;
+function formatQuoteTimestamp(value) {
+  const timestamp = Number(value);
+  const date = new Date(timestamp * 1000);
+  if (!Number.isFinite(timestamp) || timestamp <= 0 || Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).format(date);
 }
 
 function computePercentChange(current, baseline) {
@@ -713,12 +721,14 @@ async function loadTencentSpotSnapshot(config) {
 }
 
 function normalizeEastmoneyPrice(value) {
+  if (value == null || String(value).trim() === "") return NaN;
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return NaN;
   return Math.abs(numeric) >= 10000 ? numeric / 100 : numeric;
 }
 
 function scaleEastmoneyQuoteValue(value) {
+  if (value == null || String(value).trim() === "") return NaN;
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return NaN;
   return numeric / 100;
@@ -732,12 +742,46 @@ function parseEastmoneyQuote(payload) {
   const previousClose = scaleEastmoneyQuoteValue(data.f60);
   const delta = scaleEastmoneyQuoteValue(data.f169);
 
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new Error("Invalid Eastmoney AU9999 price");
+  }
+
   return {
     price,
     changeValue: Number.isFinite(delta) ? delta : price - previousClose,
     changePercent: scaleEastmoneyQuoteValue(data.f170),
-    updatedAt: getLocalTimestamp(),
+    updatedAt: formatQuoteTimestamp(data.f86),
   };
+}
+
+function parseEastmoneyFuturesQuote(payload) {
+  const data = payload?.qt;
+  // 专用贵金属接口的价格已经是人民币/克，不需要再除以 100。
+  const price = data?.p == null ? NaN : Number(data.p);
+  if (data?.dm !== "AU9999" || !Number.isFinite(price) || price <= 0) {
+    throw new Error("Invalid Eastmoney futures AU9999 payload");
+  }
+
+  const previousClose = Number(data.qrspj);
+  const hasPreviousClose = Number.isFinite(previousClose) && previousClose > 0;
+
+  return {
+    price,
+    changeValue: hasPreviousClose ? price - previousClose : null,
+    changePercent: hasPreviousClose ? computePercentChange(price, previousClose) : null,
+    updatedAt: formatQuoteTimestamp(data.utime),
+  };
+}
+
+async function fetchAu9999Json(url) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), MARKET_REQUEST_TIMEOUT_MS);
+
+  try {
+    return await fetchJson(url, { headers: EASTMONEY_HEADERS, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeout);
+  }
 }
 
 function getEastmoneyYearBaseline(payload) {
@@ -753,24 +797,35 @@ function getEastmoneyYearBaseline(payload) {
 
 async function loadAu9999Snapshot(config) {
   const currentYear = getCurrentYear();
-  const quotePath = `/api/qt/stock/get?secid=${encodeURIComponent(config.secid)}&fields=f57,f58,f43,f44,f45,f46,f169,f170,f171,f60`;
-  let quotePayload;
+  const quotePath = `/api/qt/stock/get?secid=${encodeURIComponent(config.secid)}&fields=f57,f58,f43,f169,f170,f60,f86`;
+  // 优先使用支持跨域的贵金属专用接口，通用行情接口仅作备用。
+  const sources = [
+    {
+      url: `https://futsseapi.eastmoney.com/static/${encodeURIComponent(config.secid.replace(".", "_"))}_qt`,
+      parse: parseEastmoneyFuturesQuote,
+    },
+    ...EASTMONEY_QUOTE_HOSTS.map((host) => ({
+      url: `${host}${quotePath}`,
+      parse: parseEastmoneyQuote,
+    })),
+  ];
+  let quote;
   let lastError;
 
-  for (const host of EASTMONEY_QUOTE_HOSTS) {
+  for (const source of sources) {
     try {
-      quotePayload = await fetchJson(`${host}${quotePath}`, { headers: EASTMONEY_HEADERS });
+      const payload = await fetchAu9999Json(source.url);
+      quote = source.parse(payload);
       break;
     } catch (error) {
       lastError = error;
     }
   }
 
-  if (!quotePayload) {
+  if (!quote) {
     throw lastError || new Error("Eastmoney quote endpoints returned no data");
   }
 
-  const quote = parseEastmoneyQuote(quotePayload);
   const configuredBaseline = getMarketYtdBaseline(config.key, currentYear);
 
   if (Number.isFinite(configuredBaseline)) {
@@ -784,7 +839,7 @@ async function loadAu9999Snapshot(config) {
   let ytdPercent = null;
 
   try {
-    const historyPayload = await fetchJson(historyUrl, { headers: EASTMONEY_HEADERS });
+    const historyPayload = await fetchAu9999Json(historyUrl);
     const baseline = getEastmoneyYearBaseline(historyPayload);
     ytdPercent = computePercentChange(quote.price, baseline);
   } catch (error) {
